@@ -142,6 +142,11 @@ entry const& get_resume_data_entry(save_resume_data_alert const& self)
 }
 #endif
 
+bytes get_pkt_buf(dht_pkt_alert const& alert)
+{
+    return std::string(alert.pkt_buf().data(), static_cast<std::size_t>(alert.pkt_buf().size()));
+}
+
 namespace boost
 {
 	// some older compilers (like msvc-12.0) end up using
@@ -227,6 +232,7 @@ namespace boost
 	POLY(session_stats_alert)
 	POLY(dht_get_peers_reply_alert)
 	POLY(block_uploaded_alert)
+	POLY(dht_pkt_alert)
 
 #if TORRENT_ABI_VERSION == 1
 	POLY(anonymous_mode_alert)
@@ -990,6 +996,11 @@ void bind_alert()
        "block_uploaded_alert", no_init)
         .add_property("block_index", &block_uploaded_alert::block_index)
         .add_property("piece_index", &block_uploaded_alert::piece_index)
+        ;
+
+    class_<dht_pkt_alert, bases<alert>, noncopyable>(
+        "dht_pkt_alert", no_init)
+        .add_property("pkt_buf", get_pkt_buf)
         ;
 
 }
