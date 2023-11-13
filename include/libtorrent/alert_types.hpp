@@ -311,9 +311,9 @@ TORRENT_VERSION_NAMESPACE_3
 	{
 		// internal
 		TORRENT_UNEXPORT read_piece_alert(aux::stack_allocator& alloc, torrent_handle const& h
-			, piece_index_t p, boost::shared_array<char> d, int s);
+			, piece_index_t p, boost::shared_array<char> d, int s, client_data_t userdata = {});
 		TORRENT_UNEXPORT read_piece_alert(aux::stack_allocator& alloc, torrent_handle h
-			, piece_index_t p, error_code e);
+			, piece_index_t p, error_code e, client_data_t userdata = {});
 
 		TORRENT_DEFINE_ALERT_PRIO(read_piece_alert, 5, alert_priority::critical)
 
@@ -324,6 +324,7 @@ TORRENT_VERSION_NAMESPACE_3
 		boost::shared_array<char> const buffer;
 		piece_index_t const piece;
 		int const size;
+		client_data_t userdata;
 
 #if TORRENT_ABI_VERSION == 1
 		TORRENT_DEPRECATED error_code ec;

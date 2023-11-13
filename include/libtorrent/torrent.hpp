@@ -486,8 +486,9 @@ namespace libtorrent {
 			int blocks_left;
 			bool fail;
 			error_code error;
+			client_data_t userdata;
 		};
-		void read_piece(piece_index_t);
+		void read_piece(piece_index_t, client_data_t userdata = {});
 		void on_disk_read_complete(disk_buffer_holder, storage_error const&
 			, peer_request const&, std::shared_ptr<read_piece_struct>);
 

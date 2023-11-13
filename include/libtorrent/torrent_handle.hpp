@@ -305,12 +305,13 @@ namespace aux {
 		// specified piece before calling this function.
 		//
 		// When the read operation is completed, it is passed back through an
-		// alert, read_piece_alert. Since this alert is a response to an explicit
+		// alert, read_piece_alert (with client_data_t to be associated with this operation).
+		// Since this alert is a response to an explicit
 		// call, it will always be posted, regardless of the alert mask.
 		//
 		// Note that if you read multiple pieces, the read operations are not
 		// guaranteed to finish in the same order as you initiated them.
-		void read_piece(piece_index_t piece) const;
+		void read_piece(piece_index_t piece, client_data_t userdata = {}) const;
 
 		// Returns true if this piece has been completely downloaded and written
 		// to disk, and false otherwise.
