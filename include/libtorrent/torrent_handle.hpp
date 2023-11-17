@@ -88,6 +88,7 @@ namespace aux {
 #endif
 
 	struct read_piece_alert;
+	struct cache_flushed_alert;
 
 	using status_flags_t = flags::bitfield_flag<std::uint32_t, struct status_flags_tag>;
 	using add_piece_flags_t = flags::bitfield_flag<std::uint8_t, struct add_piece_flags_tag>;
@@ -662,7 +663,7 @@ namespace aux {
 		// more data for the torrent, but you are guaranteed that whatever cached
 		// data libtorrent had by the time you called
 		// ``torrent_handle::flush_cache()`` has been written to disk.
-		void flush_cache() const;
+		void flush_cache(callback_t<cache_flushed_alert>::type callback = {}) const;
 
 		// ``force_recheck`` puts the torrent back in a state where it assumes to
 		// have no resume data. All peers will be disconnected and the torrent
