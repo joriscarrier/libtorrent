@@ -3,6 +3,7 @@
 Copyright (c) 2003-2013, Daniel Wallin
 Copyright (c) 2013, 2015-2020, Arvid Norberg
 Copyright (c) 2016, 2018, 2020, Alden Torres
+Copyright (c) 2023, Joris Carrier
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -87,6 +88,10 @@ namespace aux {
 
 			T& alert = queue.emplace_back<T>(
 				m_allocations[m_generation], std::forward<Args>(args)...);
+
+			if constexpr (std::is_base_of_v<callback_t<T>, T>) {
+				if (alert.has_callback()) alert.callback();
+			}
 
 			maybe_notify(&alert);
 		}
