@@ -200,19 +200,23 @@ namespace libtorrent {
 
 	read_piece_alert::read_piece_alert(aux::stack_allocator& alloc
 		, torrent_handle const& h
-		, piece_index_t p, boost::shared_array<char> d, int s)
+		, piece_index_t p, boost::shared_array<char> d, int s
+		, callback_t<read_piece_alert>::type c)
 		: torrent_alert(alloc, h)
 		, buffer(std::move(d))
 		, piece(p)
 		, size(s)
+		, callback_t<read_piece_alert>(std::move(c))
 	{}
 
 	read_piece_alert::read_piece_alert(aux::stack_allocator& alloc
-		, torrent_handle h, piece_index_t p, error_code e)
+		, torrent_handle h, piece_index_t p, error_code e
+		, callback_t<read_piece_alert>::type c)
 		: torrent_alert(alloc, h)
 		, error(e)
 		, piece(p)
 		, size(0)
+		, callback_t<read_piece_alert>(std::move(c))
 #if TORRENT_ABI_VERSION == 1
 		, ec(e)
 #endif
