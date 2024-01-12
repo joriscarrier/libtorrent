@@ -3533,6 +3533,8 @@ namespace {
 			peer_id pid;
 			std::copy(recv_buffer.begin(), recv_buffer.begin() + 20, pid.data());
 
+			set_pid(pid);
+
 			// now, let's see if this connection should be closed
 			peer_connection* p = t->find_peer(pid);
 			if (p)
@@ -3556,7 +3558,6 @@ namespace {
 				}
 			}
 
-			set_pid(pid);
 			m_client_version = identify_client(pid);
 			if (pid[0] == '-' && pid[1] == 'B' && pid[2] == 'C' && pid[7] == '-')
 			{
